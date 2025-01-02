@@ -6,7 +6,7 @@ const rl = readline.createInterface({
 });
 
 let todoId = 1;
-const todoList = [];
+let todoList = [];
 
 // 입력된 명령어
 let command = null;
@@ -27,6 +27,10 @@ rl.on("line", (line) => {
   } else if (command === 'add'){
     //add
     todoList.push({id:todoId++,content: line, isFinished: false});
+    command = null;
+  } else if (command === 'delete'){
+    //delete
+    todoList = todoList.filter(todo => todo.id !== Number(line));
     command = null;
   }
 });
