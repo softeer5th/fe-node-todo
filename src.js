@@ -3,6 +3,8 @@ const rl = require('readline').createInterface({
     output: process.stdout,
 })
 
+const regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
+
 const todoList = []
 
 const addTodo = () => {
@@ -13,8 +15,12 @@ const addTodo = () => {
             todoItem["name"] = answer
             rl.question('기한 : ',
                 answer => {
-                    todoItem["dueDate"] = answer
-                    todoList.push(todoItem);
+                    if (!regex.test(answer)) {
+                        console.log("잘못된 입력입니다. 다시 입력해 주세요.")
+                    } else {
+                        todoItem["dueDate"] = answer
+                        todoList.push(todoItem);
+                    }
                     todo();
                 }
             )
@@ -31,9 +37,13 @@ const editTodo = () => {
                 todoItem["name"] = answer
                 rl.question('기한 : ',
                     answer => {
-                        todoItem["dueDate"] = answer
-                        todoList[Number(itemIndex)] = todoItem
-                        todo()
+                        if (!regex.test(answer)) {
+                            console.log("잘못된 입력입니다. 다시 입력해 주세요.")
+                        } else {
+                            todoItem["dueDate"] = answer
+                            todoList[Number(itemIndex)] = todoItem
+                        }
+                        todo();
                     }
                 )
             }
@@ -41,17 +51,19 @@ const editTodo = () => {
     })
 }
 
- const printTodo = () => {
+
+const printTodo = () => {
     todoList.forEach((v, i) => {
         console.log(`${i} - 이름 : ${v["name"]}, 기한 : ${v["dueDate"]}`)
     })
+    todo();
 }
 
 const checkTodo = () => {
-    printTodo()
+    printTodo();
     rl.question("수정할 TODO를 선택해 주세요.", itemIndex => {
-        todoList.splice(Number(itemIndex), 1)
-        todo()
+        todoList.splice(Number(itemIndex), 1);
+        todo();
     })
 }
 
@@ -81,8 +93,10 @@ function todo() {
             case '5':
                 rl.close();
                 return;
+            default:
+                console.log("잘못된 입력입니다. 다시 입력해 주세요.")
+                todo();
         }
-        todo();
     });
 }
 
