@@ -77,28 +77,33 @@ const addTodo = () => {
 const editTodo = () => {
     printTodo()
     rl.question("수정할 TODO를 선택해 주세요.", itemIndex => {
-        const todoItem = {}
-        rl.question('이름: ',
-            answer => {
-                if ((todoList.findIndex(v => v["name"] === answer)) !== itemIndex) {
-                    console.log("중복된 이름의 TODO가 존재합니다.")
-                    todo()
-                } else {
-                    todoItem["name"] = answer
-                    rl.question('기한(YYYY-MM-DD): ',
-                        answer => {
-                            if (!checkDate(answer)) {
-                                console.log("잘못된 입력입니다. 다시 입력해 주세요.")
-                            } else {
-                                todoItem["dueDate"] = answer
-                                todoList[Number(itemIndex)] = todoItem
+        if (itemIndex >= todoList.length) {
+            console.log("존재하지 않는 TODO입니다.")
+            todo();
+        } else {
+            const todoItem = {}
+            rl.question('이름: ',
+                answer => {
+                    if ((todoList.findIndex(v => v["name"] === answer)) === itemIndex) {
+                        console.log("중복된 이름의 TODO가 존재합니다.")
+                        todo()
+                    } else {
+                        todoItem["name"] = answer
+                        rl.question('기한(YYYY-MM-DD): ',
+                            answer => {
+                                if (!checkDate(answer)) {
+                                    console.log("잘못된 입력입니다. 다시 입력해 주세요.")
+                                } else {
+                                    todoItem["dueDate"] = answer
+                                    todoList[Number(itemIndex)] = todoItem
+                                }
+                                todo();
                             }
-                            todo();
-                        }
-                    )
+                        )
+                    }
                 }
-            }
-        )
+            )
+        }
     })
 }
 
@@ -112,8 +117,13 @@ const printTodo = () => {
 const checkTodo = () => {
     printTodo();
     rl.question("체크할 TODO를 선택해 주세요.", itemIndex => {
-        todoList.splice(Number(itemIndex), 1);
-        todo();
+        if (itemIndex >= todoList.length) {
+            console.log("존재하지 않는 TODO입니다.")
+            todo();
+        } else {
+            todoList.splice(Number(itemIndex), 1);
+            todo();
+        }
     })
 }
 
