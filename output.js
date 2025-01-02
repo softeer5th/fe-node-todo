@@ -6,14 +6,22 @@ const Output = {
     },
 
     printTodos() {
+        const size = todoMap.size;
+        if(size === 0) {
+            console.log('투두가 존재하지 않습니다.');
+            return;
+        }
+        Output.printLine();
+        console.log('투두리스트');
+        console.log('id | title');
         todoMap.values().forEach((todo)=> {
             const { id, title } = todo.getTodo();
-            console.log(id, title)
+            console.log(id, '|', title)
         });
     },
 
     printMenu() {
-        console.log("-".repeat(10));
+        Output.printLine();
         console.log("1. 추가");
         console.log("2. 조회");
         console.log("3. 수정");
@@ -26,6 +34,10 @@ const Output = {
         const {title, contents} = todo.getDetail();
         console.log(title, contents);
     },
+
+    printLine() {
+        console.log("-".repeat(10));
+    }
 }
 
 

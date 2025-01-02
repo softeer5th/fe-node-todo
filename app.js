@@ -1,6 +1,5 @@
 import Input from "./input.js";
 import Output from "./output.js";
-import Todo from "./todo.js";
 import {todoMap,  setTodoMap } from "./todoList.js";
 
 const App = async () => {

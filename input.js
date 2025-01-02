@@ -9,7 +9,7 @@ const rl = readlinePromises.createInterface({
 
 const Input = {
     async readMenu() {
-        const res = await rl.question(`What's your Menu?\n`);
+        const res = await rl.question(`실행할 메뉴를 입력해주세요.\n`);
         return res;
     },
 
