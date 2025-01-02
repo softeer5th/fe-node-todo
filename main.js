@@ -1,6 +1,5 @@
 import readline from 'readline';
 import { ToDo } from './todo.js';
-import { generateDate } from './utils/index.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -11,7 +10,6 @@ let toDoList = [];
 
 async function myInput(text) {
     return new Promise((resolve) => rl.question(text, (answer) => {
-
         resolve(answer);
     }));
 
@@ -19,16 +17,16 @@ async function myInput(text) {
 
 async function showInformation() {
     console.log("\n-----TODO LIST에 온 걸 환영해요-----");
-    console.log("1. 투주 보기(명령어: 보기)");
-    console.log("2. 투주 추가(명령어: 추가)");
-    console.log("3. 투주 삭제(명령어: 삭제)");
-    console.log("4. 투주 상태 바꾸기(명령어: 바꾸기)");
+    console.log("1. 투두 보기(명령어: 보기)");
+    console.log("2. 투두 추가(명령어: 추가)");
+    console.log("3. 투두 삭제(명령어: 삭제)");
+    console.log("4. 투두 상태 바꾸기(명령어: 바꾸기)");
     console.log("------------------------------------");
 
     return await myInput("원하는 명령어를 입력해주세요: ");
 }
 
-async function addTodo() {
+async function addToDo() {
     const title = await myInput('투두의 제목을 입력해주세요: ');
     const content = await myInput('투두의 내용을 입력해주세요: ');
     toDoList = [...toDoList, (new ToDo(toDoList.length + 1, title, content))]
