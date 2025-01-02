@@ -16,7 +16,7 @@ while (true) {
   }
   console.log("└" + "─".repeat(width - 2) + "┘");
 
-  let input = readlineSync.question("1: 등록   |   2: 수정   |   3: 삭제    |    q: 종료\n수행할 메뉴를 알파벳 o를 붙여서 입력해주세요.\n[o를 붙이지 않을 시 해당 순번의 투두가 체크/언체크 됩니다.]\n");
+  let input = readlineSync.question("1: 등록   |   2: 수정   |   3: 삭제    |    q: 종료\n수행할 메뉴를 알파벳 o를 붙여서 입력해주세요.\n(o를 붙이지 않을 시 해당 순번의 투두가 체크/언체크 됩니다.)\n");
   let optionSelected = false;
 
   if (input.startsWith("o")) {
@@ -62,7 +62,7 @@ function toggleTodo(inputOption) {
     }
     todoArray[inputOption - 1] = changedTodo;
   } else {
-    console.log(`${inputOption - 1}번째 투두는 존재하지 않습니다`);
+    console.log(`${inputOption}번째 투두는 존재하지 않습니다`);
   }
 }
 
