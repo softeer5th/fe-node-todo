@@ -24,6 +24,7 @@ const INFO_MESSAGE = {
   delete: '삭제할 todo id를 입력해주세요:',
   finish: '완료한 todo id를 입력해주세요:',
   edit: '수정할 todo id와 수정할 내용을 공백을 두고 입력해주세요:',
+  error: '잘못된 명령어입니다. 다시 입력해주세요!',
 };
 
 const printInfoMessage = (command) => {
@@ -46,11 +47,17 @@ const printInfoMessage = (command) => {
 console.log(INFO_MESSAGE.start);
 
 rl.on('line', (line) => {
+  if (command === null && !Object.values(COMMAND).includes(line)) {
+    console.log(INFO_MESSAGE.error);
+    return;
+  }
+
   if (command === null && line !== COMMAND.print) {
     command = line;
     printInfoMessage(command);
     return;
   }
+
   if (command === null && line === COMMAND.print) {
     todoList.sort();
     todoList.print();
