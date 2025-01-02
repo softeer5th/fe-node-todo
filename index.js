@@ -20,6 +20,12 @@ rl.on("line", (line) => {
     if(line === 'print'){
       console.log('id | content')
       console.log('------------')
+      todoList = todoList.sort((a, b) => {
+        if(a.isFinished > b.isFinished) return 1;
+        else if(a.isFinished < b.isFinished) return -1;
+        return 0;
+      })
+
         todoList.forEach(todo => {
             console.log(` ${todo.id} | ${todo.content} ${todo.isFinished ? '(finished)' : ''}`);
         });
