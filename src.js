@@ -5,7 +5,7 @@ const rl = require('readline').createInterface({
 
 const todoList = []
 
- const addTodo = () => {
+const addTodo = () => {
     const todoItem = {}
 
     rl.question('이름 : ', 
@@ -22,9 +22,35 @@ const todoList = []
     )
 }
 
+const editTodo = () => {
+    printTodo()
+    rl.question("수정할 TODO를 선택해 주세요.", itemIndex => {
+        const todoItem = {}
+        rl.question('이름 : ',
+            answer => {
+                todoItem["name"] = answer
+                rl.question('기한 : ',
+                    answer => {
+                        todoItem["dueDate"] = answer
+                        todoList[Number(itemIndex)] = todoItem
+                        todo()
+                    }
+                )
+            }
+        )
+    })
+}
+
  const printTodo = () => {
     todoList.forEach((v, i) => {
-        console.log(`이름 : ${v["name"]}, 기한 : ${v["dueDate"]}`)
+        console.log(`${i} - 이름 : ${v["name"]}, 기한 : ${v["dueDate"]}`)
+    })
+}
+
+const checkTodo = () => {
+    printTodo()
+    rl.question("수정할 TODO를 선택해 주세요.", itemIndex => {
+        todoList.splice(Number(itemIndex), 1)        
     })
 }
 
@@ -44,6 +70,11 @@ function todo() {
                 break;
             case '2':
                 printTodo();
+                break;
+            case '3':
+                editTodo();
+                break;
+            case '4':
                 break;
             case '5':
                 rl.close();
