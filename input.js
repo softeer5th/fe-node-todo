@@ -35,7 +35,11 @@ const Input = {
         const newContents = await rl.question(`Contents : ${contents}`);
 
         return {newTitle, newContents};
-    } 
+    },
+
+    close() {
+        rl.close();
+    }
 }
 
 
