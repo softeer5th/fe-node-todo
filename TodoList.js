@@ -11,7 +11,6 @@ class TodoList {
     print(){
       console.log('id | content')
       console.log('------------')
-      console.log('print todoList:', this.#todoList);
       this.#todoList.forEach(todo => {
           console.log(` ${todo.id} | ${todo.content} ${todo.isFinished ? '(finished)' : ''}`);
       });

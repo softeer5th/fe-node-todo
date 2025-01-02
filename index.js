@@ -28,16 +28,21 @@ rl.on("line", (line) => {
       todoList.print();
       return;
   }
-
-  if (command === COMMAND.add){
-    todoList.add(line);
-  } else if (command === COMMAND.delete){
-    todoList.delete(line);
-  } else if (command === COMMAND.finish){
-    todoList.finish(line);
-  } else if (command === COMMAND.edit){
-    const [todoId, editContent] = line.split(' ');
-    todoList.edit(todoId, editContent);
+  
+  switch(command) {
+    case COMMAND.add:
+      todoList.add(line);
+      break;
+    case COMMAND.delete:
+      todoList.delete(line);
+      break;
+    case COMMAND.finish:
+      todoList.finish(line);
+      break;
+    case COMMAND.edit:
+      const [todoId, editContent] = line.split(' ');
+      todoList.edit(todoId, editContent);
+      break;
   }
 
   command = null;
