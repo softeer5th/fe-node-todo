@@ -18,6 +18,10 @@ const App = async () => {
             const id = await Input.showTodo();
             Output.printTodoDetail(id);
         }
+        else if (menu === '3') {
+            const id = await Input.showTodo();
+            todoMap.delete(Number(id));
+        } 
     }
 }
 App();
