@@ -1,4 +1,5 @@
 import readlinePromises from 'node:readline/promises';
+import { isInTodoMap } from './todoList.js';
 
 const rl = readlinePromises.createInterface({
     input: process.stdin,
@@ -12,15 +13,21 @@ const Input = {
         return res;
     },
 
-    async InsertTodo() {
+    async insertTodo() {
         const title = await rl.question('Title : ');
         const contents = await rl.question('Contents : ');
         return {title, contents};
     },
 
-    async showTodo() {
-        const id = await rl.question('Id : ');
-        return id;
+    async getTodoId() {
+        do {
+            const id = await rl.question('Id : ');
+            if (!isInTodoMap(id)) {
+                console.log("ERROR: 존재하지 않는 id입니다.")
+                continue;
+            }
+            return id;
+          } while (1);
     },
 
     async editTodo({title, contents}) {

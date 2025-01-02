@@ -10,3 +10,8 @@ export const setTodoMap = (todo) => {
     todoMap.set(index, newTodo);
     index++;
 };
+
+export const isInTodoMap = (id) => {
+    if (todoMap.has(Number(id))) return true;
+    return false;
+}
