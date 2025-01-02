@@ -8,13 +8,18 @@ const menu = {
 
 const fs = require('fs')
 
-
 const rl = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout,
 })
 
-const todoList = JSON.parse(fs.readFileSync('./data.json'))["data"]
+let todoList;
+
+if (fs.existsSync('./data.json')) {
+    todoList = JSON.parse(fs.readFileSync('./data.json'))["data"];
+} else {
+    todoList = [];
+}
 
 const checkDate = (date) => {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
