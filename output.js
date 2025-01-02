@@ -7,6 +7,12 @@ const Output = {
             console.log(id, title)
         });
     },
+
+    printTodoDetail(id) {
+        const todo = todoMap.get(Number(id));
+        const {title, contents} = todo.getDetail();
+        console.log(title, contents);
+    }
 }
 
 

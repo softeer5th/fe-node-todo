@@ -15,6 +15,13 @@ class Todo {
             title: this.#title
         }
     }
+
+    getDetail() {
+        return {
+            title: this.#title,
+            contents: this.#contents
+        }
+    }
 }
 
 export default Todo;

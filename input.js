@@ -13,9 +13,14 @@ const Input = {
     },
 
     async InsertTodo() {
-        const title = await rl.question('Title : \n ');
-        const contents = await rl.question('Contents : \n');
+        const title = await rl.question('Title : ');
+        const contents = await rl.question('Contents : ');
         return {title, contents};
+    },
+
+    async showTodo() {
+        const id = await rl.question('Id : ');
+        return id;
     }
 }
 

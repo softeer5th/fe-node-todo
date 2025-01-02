@@ -14,6 +14,10 @@ const App = async () => {
             const newTodo = new Todo(title, contents, id);
             todoMap.set(id, newTodo);
         }
+        else if(menu === '2') {
+            const id = await Input.showTodo();
+            Output.printTodoDetail(id);
+        }
     }
 }
 App();
