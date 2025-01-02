@@ -1,5 +1,6 @@
 import readline from 'readline';
 import { ToDo } from './todo.js';
+import { generateDate } from './utils/index.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -17,7 +18,7 @@ async function myInput(text){
 }
 
 async function showInformation(){
-    console.log("-----TODO LIST에 온 걸 환영해요-----");
+    console.log("\n-----TODO LIST에 온 걸 환영해요-----");
     console.log("1. 할 일 보기(명령어: 보기)");
     console.log("2. 할 일 추가(명령어: 추가)");
     console.log("3. 할 일 삭제(명령어: 삭제)");
@@ -33,7 +34,18 @@ async function addTodo(){
 }
 
 function showToDo() {
-    console.log(toDoList);
+    if(toDoList.length === 0){
+        console.log("현재 투두가 존재하지 않아요!");
+    }
+    else {
+        toDoList.map((toDo) => {
+            console.log(`\n${toDo.id} ${toDo.checked ? '✅': '❌'}`);
+            console.log('제목:', toDo.title);
+            console.log('내용:', toDo.content);
+            console.log('생성 일자:', generateDate(toDo.createdAt));
+        })
+    }
+    
 }
 
 async function deleteToDo(){
