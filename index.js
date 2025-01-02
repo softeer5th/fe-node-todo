@@ -38,6 +38,11 @@ rl.on("line", (line) => {
     //finish
     todoList = todoList.map(todo => todo.id === Number(line) ? {...todo, isFinished: true} : todo);
     command = null;
+  } else if (command === 'edit'){
+    //edit
+    const [todoId, editContent] = line.split(' ');
+    todoList = todoList.map(todo => todo.id === Number(todoId) ? {...todo, content: editContent} : todo);
+    command = null;
   }
 });
 rl.on("close", () => {
