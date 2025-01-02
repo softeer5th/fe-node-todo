@@ -1,3 +1,11 @@
+const menu = {
+    ADD: "1",
+    PRINT: "2",
+    EDIT: "3",
+    CHECK: "4",
+    QUIT: "5",
+}
+
 const rl = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -130,20 +138,20 @@ const checkTodo = () => {
 function todo() {
     rl.question("\n명령어를 입력해 주세요.\n1. TODO 추가\n2. TODO 목록 출력\n3. TODO 수정\n4. TODO 체크\n5. 프로그램 종료\n", (answer) => {
         switch (answer) {
-            case '1':
+            case menu.ADD:
                 addTodo();
                 break;
-            case '2':
+            case menu.PRINT:
                 printTodo();
                 todo();
                 break;
-            case '3':
+            case menu.EDIT:
                 editTodo();
                 break;
-            case '4':
+            case menu.CHECK:
                 checkTodo();
                 break;
-            case '5':
+            case menu.QUIT:
                 rl.close();
                 return;
             default:
