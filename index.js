@@ -1,5 +1,6 @@
 const TodoList = require('./TodoList.js');
 const readline = require('readline');
+const { INFO_MESSAGE, COMMAND } = require('./constant.js');
 
 let command = null; // 이전에 입력된 명령어(add, print, delete, edit, finish)
 const todoList = new TodoList();
@@ -8,24 +9,6 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
-const COMMAND = {
-  print: 'print',
-  add: 'add',
-  delete: 'delete',
-  finish: 'finish',
-  edit: 'edit',
-};
-
-const INFO_MESSAGE = {
-  start: '[START] 명령어를 입력해주세요: add, print, delete, edit, finish',
-  next: '\n명령어를 입력해주세요: add, print, delete, edit, finish',
-  add: '추가할 내용을 입력해주세요:',
-  delete: '삭제할 todo id를 입력해주세요:',
-  finish: '완료한 todo id를 입력해주세요:',
-  edit: '수정할 todo id와 수정할 내용을 공백을 두고 입력해주세요:',
-  error: '잘못된 명령어입니다. 다시 입력해주세요!',
-};
 
 const printInfoMessage = (command) => {
   switch (command) {
@@ -65,24 +48,27 @@ rl.on('line', (line) => {
     return;
   }
 
-  switch (command) {
-    case COMMAND.add:
-      todoList.add(line);
-      break;
-    case COMMAND.delete:
-      todoList.delete(line);
-      break;
-    case COMMAND.finish:
-      todoList.finish(line);
-      break;
-    case COMMAND.edit:
-      const [todoId, editContent] = line.split(' ');
-      todoList.edit(todoId, editContent);
-      break;
-  }
+  try {
+    switch (command) {
+      case COMMAND.add:
+        todoList.add(line);
+        break;
+      case COMMAND.delete:
+        todoList.delete(line);
+        break;
+      case COMMAND.finish:
+        todoList.finish(line);
+        break;
+      case COMMAND.edit:
+        todoList.edit(line);
+        break;
+    }
 
-  command = null;
-  console.log(INFO_MESSAGE.next);
+    command = null;
+    console.log(INFO_MESSAGE.next);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 rl.on('close', () => {
   process.exit();
