@@ -18,8 +18,10 @@ const commands = ['add', 'print','delete','edit','finish'];
 rl.on("line", (line) => {
   if(command === null){
     if(line === 'print'){
+      console.log('id | content')
+      console.log('------------')
         todoList.forEach(todo => {
-            console.log(todo);
+            console.log(` ${todo.id} | ${todo.content} ${todo.isFinished ? '(finished)' : ''}`);
         });
     } else {
         command = line;
@@ -31,6 +33,10 @@ rl.on("line", (line) => {
   } else if (command === 'delete'){
     //delete
     todoList = todoList.filter(todo => todo.id !== Number(line));
+    command = null;
+  } else if (command === 'finish'){
+    //finish
+    todoList = todoList.map(todo => todo.id === Number(line) ? {...todo, isFinished: true} : todo);
     command = null;
   }
 });
