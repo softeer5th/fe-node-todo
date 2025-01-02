@@ -2,7 +2,7 @@ const menu = {
     ADD: "1",
     PRINT: "2",
     EDIT: "3",
-    CHECK: "4",
+    COMPLETE: "4",
     QUIT: "5",
 }
 
@@ -119,9 +119,9 @@ const printTodo = () => {
     })
 }
 
-const checkTodo = () => {
+const completeTodo = () => {
     printTodo();
-    rl.question("체크할 TODO를 선택해 주세요.", itemIndex => {
+    rl.question("완료할 TODO를 선택해 주세요.", itemIndex => {
         if (itemIndex >= todoList.length) {
             console.log("존재하지 않는 TODO입니다.")
             todo();
@@ -145,7 +145,7 @@ rl.on('close', () => {
 })
 
 function todo() {
-    rl.question("\n명령어를 입력해 주세요.\n1. TODO 추가\n2. TODO 목록 출력\n3. TODO 수정\n4. TODO 체크\n5. 프로그램 종료\n", (answer) => {
+    rl.question("\n명령어를 입력해 주세요.\n1. TODO 추가\n2. TODO 목록 출력\n3. TODO 수정\n4. TODO 완료\n5. 프로그램 종료\n", (answer) => {
         switch (answer) {
             case menu.ADD:
                 addTodo();
@@ -157,8 +157,8 @@ function todo() {
             case menu.EDIT:
                 editTodo();
                 break;
-            case menu.CHECK:
-                checkTodo();
+            case menu.COMPLETE:
+                completeTodo();
                 break;
             case menu.QUIT:
                 rl.close();
