@@ -50,7 +50,8 @@ const editTodo = () => {
 const checkTodo = () => {
     printTodo()
     rl.question("수정할 TODO를 선택해 주세요.", itemIndex => {
-        todoList.splice(Number(itemIndex), 1)        
+        todoList.splice(Number(itemIndex), 1)
+        todo()
     })
 }
 
@@ -75,6 +76,7 @@ function todo() {
                 editTodo();
                 break;
             case '4':
+                checkTodo();
                 break;
             case '5':
                 rl.close();
