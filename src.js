@@ -6,12 +6,16 @@ const menu = {
     QUIT: "5",
 }
 
+const fs = require('fs')
+
+
 const rl = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout,
 })
 
-const regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
+const todoList = JSON.parse(fs.readFileSync('./data.json'))["data"]
+
 const checkDate = (date) => {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     if (!regex.test(date)) {
@@ -54,8 +58,6 @@ const checkDate = (date) => {
     return true;
 }
 
-
-const todoList = []
 
 const addTodo = () => {
     const todoItem = {}
@@ -134,6 +136,18 @@ const checkTodo = () => {
         }
     })
 }
+
+const saveTodo = () => {
+    const data = {
+        "data": todoList
+    }
+
+    fs.writeFileSync('./data.json', JSON.stringify(data))
+}
+
+rl.on('close', () => {
+    saveTodo();
+})
 
 function todo() {
     rl.question("\n명령어를 입력해 주세요.\n1. TODO 추가\n2. TODO 목록 출력\n3. TODO 수정\n4. TODO 체크\n5. 프로그램 종료\n", (answer) => {
