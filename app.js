@@ -21,6 +21,12 @@ const App = async () => {
         else if (menu === '3') {
             const id = await Input.showTodo();
             todoMap.delete(Number(id));
+        }
+        else if(menu === '4') {
+            const id = await Input.showTodo();
+            const todo = todoMap.get(Number(id));
+            const {newTitle, newContents} = await Input.editTodo(todo.getDetail());
+            todo.editDetail(newTitle, newContents);
         } 
     }
 }

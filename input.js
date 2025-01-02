@@ -21,7 +21,14 @@ const Input = {
     async showTodo() {
         const id = await rl.question('Id : ');
         return id;
-    }
+    },
+
+    async editTodo({title, contents}) {
+        const newTitle = await rl.question(`Title : ${title}`);
+        const newContents = await rl.question(`Contents : ${contents}`);
+
+        return {newTitle, newContents};
+    } 
 }
 
 

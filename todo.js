@@ -22,6 +22,15 @@ class Todo {
             contents: this.#contents
         }
     }
+
+    editDetail(newTitle, newContents) {
+        if(newTitle !== '') {
+            this.#title = newTitle;
+        }
+        if(newContents !== '') {
+            this.#contents = newContents;
+        }
+    }
 }
 
 export default Todo;
