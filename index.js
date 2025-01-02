@@ -5,56 +5,93 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-let todoId = 1;
-let todoList = [];
+class Todo {
+  #id;
+  #content;
+  #isFinished;
+
+  constructor({id, content, isFinished}){
+    this.#id = id;
+    this.#content = content;
+    this.#isFinished = isFinished;
+  }
+
+  get id() {
+    return this.#id;
+  }
+
+  get content() {
+    return this.#content;
+  }
+
+  get isFinished() {
+    return this.#isFinished;
+  }
+  
+  mine(){
+    return {id: this.#id, content: this.#content, isFinished: this.#isFinished }
+  }
+}
+
+class TodoList {
+  #todoList = [];
+  #nextId = 1;
+
+  add(content){
+    const todo = new Todo({ id:this.#nextId++, content, isFinished: false });
+    this.#todoList.push(todo);
+  }
+  print(){
+    console.log('id | content')
+    console.log('------------')
+    console.log('print todoList:', this.#todoList);
+    this.#todoList.forEach(todo => {
+        console.log(` ${todo.id} | ${todo.content} ${todo.isFinished ? '(finished)' : ''}`);
+    });
+  }
+  delete(todoId){
+    this.#todoList = this.#todoList.filter(todo => todo.id !== Number(todoId));
+  }
+  edit(todoId, content){
+    this.#todoList = this.#todoList.map(todo => todo.id === Number(todoId) ? new Todo({...todo.mine(), content}) : todo);
+  }
+  finish(todoId){
+    this.#todoList = this.#todoList.map(todo => todo.id === Number(todoId) ? new Todo({...todo.mine(), isFinished: true}) : todo);
+  }
+  sort(){
+    this.#todoList.sort((a, b) => {
+      if(a.isFinished > b.isFinished) return 1;
+      else if(a.isFinished < b.isFinished) return -1;
+      return 0;
+    })
+  }
+}
+
 
 // 입력된 명령어
 let command = null;
+const todoList = new TodoList();
 
-const commands = ['add', 'print','delete','edit','finish'];
-
-const sortTodoList = () => {
-  todoList.sort((a, b) => {
-    if(a.isFinished > b.isFinished) return 1;
-    else if(a.isFinished < b.isFinished) return -1;
-    return 0;
-  })
-}
-
-const printTodoList = () => {
-  console.log('id | content')
-  console.log('------------')
-  todoList.forEach(todo => {
-      console.log(` ${todo.id} | ${todo.content} ${todo.isFinished ? '(finished)' : ''}`);
-  });
-}
-
-// 명령어 입력 -> 명령어가 어떤 역할인지 판단 -> 함수 실행
-// add, print, delete, edit, finish
 rl.on("line", (line) => {
   if(command === null && line !== 'print'){
     command = line;
     return;
   }
   if(command === null && line === 'print'){
-      sortTodoList();
-      printTodoList();
+      todoList.sort();
+      todoList.print();
       return;
   }
 
   if (command === 'add'){
-    //add
-    todoList.push({id:todoId++,content: line, isFinished: false});
+    todoList.add(line);
   } else if (command === 'delete'){
-    //delete
-    todoList = todoList.filter(todo => todo.id !== Number(line));
+    todoList.delete(line);
   } else if (command === 'finish'){
-    //finish
-    todoList = todoList.map(todo => todo.id === Number(line) ? {...todo, isFinished: true} : todo);
+    todoList.finish(line);
   } else if (command === 'edit'){
-    //edit
     const [todoId, editContent] = line.split(' ');
-    todoList = todoList.map(todo => todo.id === Number(todoId) ? {...todo, content: editContent} : todo);
+    todoList.edit(todoId, editContent);
   }
 
   command = null;
